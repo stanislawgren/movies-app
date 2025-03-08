@@ -38,9 +38,23 @@ const MovieDetailsPage = () => {
             <Skeleton height="400px" width="16rem" borderRadius="2xl" />
           </Box>
           <Box className="w-full md:w-2/3">
-            <Skeleton height="50px" width="32rem" borderRadius="2xl" mb={6} />
-            <Skeleton height="200px" width="32rem" borderRadius="2xl" mb={6} />
-            <Skeleton height="50px" width="32rem" borderRadius="2xl" />
+            <Skeleton
+              height="50px"
+              width={{ base: "16rem", md: "32rem" }}
+              borderRadius="2xl"
+              mb={6}
+            />
+            <Skeleton
+              height="200px"
+              width={{ base: "16rem", md: "32rem" }}
+              borderRadius="2xl"
+              mb={6}
+            />
+            <Skeleton
+              height="50px"
+              width={{ base: "16rem", md: "32rem" }}
+              borderRadius="2xl"
+            />
           </Box>
         </Flex>
       </div>
@@ -103,7 +117,7 @@ const MovieDetailsPage = () => {
               <Text>{data?.overview}</Text>
             </Box>
 
-            <Stack direction="row" gap={3} mt={3} mb={3}>
+            <Stack direction="row" gap={3} mt={3} mb={3} flexWrap={"wrap"}>
               {data?.genres && generateGenres(data?.genres)}
             </Stack>
             <Stack
