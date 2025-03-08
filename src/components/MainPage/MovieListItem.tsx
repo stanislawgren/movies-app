@@ -16,9 +16,10 @@ const MovieListItem = ({ movie }: { movie: IMovie }) => {
       }}
     >
       <Image
-        src={`https://image.tmdb.org/t/p/w185/${movie.poster_path}`}
+        src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
         alt={movie.title + "_poster"}
         className="w-full object-cover"
+        loading="lazy"
       />
       <Box p={4} className="flex flex-col flex-1">
         <Flex justify="space-between" align="center" mb={2}>

@@ -1,9 +1,15 @@
 import MovieListItem from "@/components/MainPage/MovieListItem";
 import { IMoviesList } from "@/interfaces/movies.interfaces";
 import { getMovies } from "@/services/moviesService";
-import { Box, Group, SimpleGrid, Skeleton } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Group,
+  SimpleGrid,
+  Skeleton,
+  Heading,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -12,26 +18,48 @@ import {
 } from "@/components/ui/pagination";
 import { AxiosError } from "axios";
 import GenresSelect from "@/components/MainPage/GenresSelect";
+import { useSearchParams } from "react-router";
 
 const MainPage = () => {
-  const [page, setPage] = useState<number>(1);
-  const [genre, setGenre] = useState<number | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const selectedGenre = searchParams.get("genre") || "";
+
+  const handlePageChange = (newPage: number) => {
+    setSearchParams({ page: newPage.toString(), genre: selectedGenre });
+  };
+
+  const handleGenreChange = (genre: string) => {
+    setSearchParams({ page: "1", genre: genre });
+  };
 
   const { data, isLoading, isError, error } = useQuery<IMoviesList, AxiosError>(
     {
-      queryKey: ["getMovies", page],
-      queryFn: () => getMovies(page),
+      queryKey: ["getMovies", currentPage, selectedGenre],
+      queryFn: () => getMovies(currentPage, selectedGenre),
     }
   );
 
   if (isError) {
     console.log(error);
-    return <>Niestety coś poszło nie tak</>;
+    return <>Something went wrong</>;
   }
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      <GenresSelect genre={genre} setGenre={setGenre} />
+      <Flex
+        pt={6}
+        maxWidth={"8xl"}
+        className="w-full p-6"
+        direction={{ base: "column", md: "row", xl: "row" }}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Heading as="h1" size="5xl" className="text-gray-200 text-left">
+          Movie List Task
+        </Heading>
+        <GenresSelect genre={selectedGenre} setGenre={handleGenreChange} />
+      </Flex>
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 4, lg: 5 }}
         gap="2rem"
@@ -56,9 +84,9 @@ const MainPage = () => {
         className="w-fit"
         count={data?.total_results ? data.total_results : 0}
         pageSize={20}
-        page={page}
+        page={currentPage}
         onPageChange={(e) => {
-          setPage(e.page);
+          handlePageChange(e.page);
         }}
       >
         <Group attached>
