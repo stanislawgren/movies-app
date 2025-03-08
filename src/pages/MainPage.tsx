@@ -55,7 +55,7 @@ const MainPage = () => {
         justifyContent={"space-between"}
         alignItems={"center"}
       >
-        <Heading as="h1" size="5xl" className="text-gray-200 text-left">
+        <Heading as="h1" size="5xl" className="text-gray-200 text-center">
           Movie List Task
         </Heading>
         <GenresSelect genre={selectedGenre} setGenre={handleGenreChange} />
