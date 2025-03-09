@@ -113,7 +113,7 @@ const MovieDetailsPage = () => {
           _hover={{ bg: "gray.800" }}
           className="mt-4 self-start m-6"
           onClick={() => {
-            navigate("/");
+            navigate(-1);
           }}
         >
           Go Back
