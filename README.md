@@ -31,6 +31,6 @@ VITE_MOVIES_API_KEY="HERE_YOUR_MOVIE_DB_API_KEY"
 
 # How to
 
-To test API, run project following above instructions and visit `http://localhost:5173`.
+To test solution, run project following above instructions and visit `http://localhost:5173`.
 
 Moreover, project is hosted on Vercel at address `https://movies-app-blush-gamma.vercel.app/`.
