@@ -41,8 +41,17 @@ const MainPage = () => {
   );
 
   if (isError) {
-    console.log(error);
-    return <>Something went wrong</>;
+    return (
+      <Box
+        height="100vh"
+        className="flex flex-col items-center justify-center"
+        p={6}
+      >
+        <Heading as="h1" size="5xl" className="text-gray-500 text-center">
+          Something went wrong
+        </Heading>
+      </Box>
+    );
   }
 
   return (

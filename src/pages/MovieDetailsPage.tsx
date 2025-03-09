@@ -28,42 +28,62 @@ const MovieDetailsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full flex flex-col items-center justify-center h-full">
-        <Flex
-          direction={{ base: "column", md: "row" }}
-          className="h-full gap-6"
-          mt={24}
-        >
-          <Box className="w-full md:w-1/3 p-6 flex flex-col items-center md:items-start">
-            <Skeleton height="400px" width="16rem" borderRadius="2xl" />
-          </Box>
-          <Box className="w-full md:w-2/3">
-            <Skeleton
-              height="50px"
-              width={{ base: "16rem", md: "32rem" }}
-              borderRadius="2xl"
-              mb={6}
-            />
-            <Skeleton
-              height="200px"
-              width={{ base: "16rem", md: "32rem" }}
-              borderRadius="2xl"
-              mb={6}
-            />
-            <Skeleton
-              height="50px"
-              width={{ base: "16rem", md: "32rem" }}
-              borderRadius="2xl"
-            />
-          </Box>
-        </Flex>
-      </div>
+      <Box
+        height="100vh"
+        className="flex flex-col items-center justify-center"
+        p={6}
+      >
+        <Box className="max-w-5xl flex flex-col h-full md:h-min" gap={6}>
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            className="h-full gap-6"
+            mt={24}
+          >
+            <Box
+              display={"flex"}
+              flexDir={"column"}
+              p={6}
+              className="w-full md:w-1/3 items-center md:items-start"
+            >
+              <Skeleton height="400px" width="16rem" borderRadius="2xl" />
+            </Box>
+            <Box className="w-full md:w-2/3">
+              <Skeleton
+                height="50px"
+                width={{ base: "16rem", md: "32rem" }}
+                borderRadius="2xl"
+                mb={6}
+              />
+              <Skeleton
+                height="200px"
+                width={{ base: "16rem", md: "32rem" }}
+                borderRadius="2xl"
+                mb={6}
+              />
+              <Skeleton
+                height="50px"
+                width={{ base: "16rem", md: "32rem" }}
+                borderRadius="2xl"
+              />
+            </Box>
+          </Flex>
+        </Box>
+      </Box>
     );
   }
 
   if (isError) {
-    console.log(error);
-    return <>Something went wrong</>;
+    return (
+      <Box
+        height="100vh"
+        className="flex flex-col items-center justify-center"
+        p={6}
+      >
+        <Heading as="h1" size="5xl" className="text-gray-500 text-center">
+          Something went wrong
+        </Heading>
+      </Box>
+    );
   }
 
   const generateGenres = (genres: IMovieGenre[]) => {
@@ -77,12 +97,15 @@ const MovieDetailsPage = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center h-full m-64 gap-8">
+    <Box
+      height="100vh"
+      className="flex flex-col items-center justify-center"
+      p={6}
+    >
       <Box
-        className="overflow-hidden max-w-5xl flex"
+        className="max-w-5xl flex h-full md:h-min"
         flexDir={"column"}
         gap={6}
-        p={6}
       >
         <Button
           variant="subtle"
@@ -90,7 +113,7 @@ const MovieDetailsPage = () => {
           _hover={{ bg: "gray.800" }}
           className="mt-4 self-start m-6"
           onClick={() => {
-            navigate(-1);
+            navigate("/");
           }}
         >
           Go Back
@@ -116,7 +139,7 @@ const MovieDetailsPage = () => {
             <Box className="rounded-2xl" bgColor="gray.800" p={6} mt={2} mb={2}>
               <Text>{data?.overview}</Text>
             </Box>
-
+            <Text>{"Duration: " + data?.runtime + " minutes"}</Text>
             <Stack direction="row" gap={3} mt={3} mb={3} flexWrap={"wrap"}>
               {data?.genres && generateGenres(data?.genres)}
             </Stack>
@@ -124,6 +147,7 @@ const MovieDetailsPage = () => {
               direction={"row"}
               justifyContent={"space-between"}
               pt={3}
+              pb={6}
               borderTop={"1px solid"}
               borderColor={"gray.800"}
             >
@@ -137,7 +161,7 @@ const MovieDetailsPage = () => {
           </Box>
         </Flex>
       </Box>
-    </div>
+    </Box>
   );
 };
 

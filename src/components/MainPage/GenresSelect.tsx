@@ -1,4 +1,4 @@
-import { createListCollection, SelectItemGroup } from "@chakra-ui/react";
+import { createListCollection } from "@chakra-ui/react";
 import {
   SelectContent,
   SelectItem,
@@ -15,15 +15,6 @@ type GenreSelectProps = {
   genre: string | null;
   setGenre: (genre: string) => void;
 };
-
-interface Category {
-  group: string;
-  items: {
-    label: string;
-    value: string;
-    group: string;
-  }[];
-}
 
 const GenresSelect = ({ genre, setGenre }: GenreSelectProps) => {
   const { data, isLoading, isError } = useQuery<
@@ -47,26 +38,15 @@ const GenresSelect = ({ genre, setGenre }: GenreSelectProps) => {
   }
 
   const genresCollection = createListCollection({
-    items:
-      data?.genres.map((genre) => ({
+    items: [
+      { label: "All", value: "", group: "Movie Genres" },
+      ...(data?.genres.map((genre) => ({
         label: genre.name,
         value: String(genre.id),
         group: "Movie Genres",
-      })) ?? [],
+      })) ?? []),
+    ],
   });
-
-  const categories: Category[] = genresCollection.items.reduce<Category[]>(
-    (acc, item) => {
-      const group = acc.find((g) => g.group === item.group);
-      if (group) {
-        group.items.push(item);
-      } else {
-        acc.push({ group: item.group, items: [item] });
-      }
-      return acc;
-    },
-    []
-  );
 
   return (
     <SelectRoot
@@ -79,14 +59,10 @@ const GenresSelect = ({ genre, setGenre }: GenreSelectProps) => {
         <SelectValueText placeholder="Select movie genre" />
       </SelectTrigger>
       <SelectContent>
-        {categories.map((category) => (
-          <SelectItemGroup key={category.group}>
-            {category.items.map((item) => (
-              <SelectItem item={item} key={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectItemGroup>
+        {genresCollection.items.map((genre) => (
+          <SelectItem item={genre} key={genre.value}>
+            {genre.label}
+          </SelectItem>
         ))}
       </SelectContent>
     </SelectRoot>
